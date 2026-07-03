@@ -1,15 +1,27 @@
 import { useState, useEffect } from 'react'
 
 function App() {
-  const [message, setMessage] = useState('')
+  const [courts, setCourts] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/hello/')
+    fetch('http://localhost:8000/api/courts/')
       .then(res => res.json())
-      .then(data => setMessage(data.message))
+      .then(data => setCourts(data))
   }, [])
 
-  return <h1>{message}</h1>
+  return (
+    <>
+    <div>
+      {courts.map(court => (
+        <div key={court.id}>
+          <h2>{court.court_name}</h2>
+          <h2>{court.location}</h2>
+          <h2>{court.price_per_hour}</h2>
+        </div>
+      ))}
+    </div>
+    </>
+  )
 }
 
 export default App
